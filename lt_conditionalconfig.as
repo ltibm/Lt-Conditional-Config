@@ -1,3 +1,5 @@
+//This addanos requires externally library;
+//Download adress is https://github.com/ltibm/TextEngine
 #include "../TextEngine/TextEngine"
 #include "LtCndConfig/_functions"
 CCVar@ cvar_Status;
