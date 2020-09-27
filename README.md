@@ -24,4 +24,4 @@ The addons is required externally library, [TextEngine](https://github.com/ltibm
 - **lt.cconfig_loadtime** Set conditional config file load time(default 0.25);
 
 
-Try another lazy config file loader.
+Try another lazy config file loader: https://github.com/ltibm/Lt-LazyConfig-Loader
