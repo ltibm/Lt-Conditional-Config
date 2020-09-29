@@ -61,7 +61,7 @@ string GetDynamicConfigFile()
 	TextEngine::Text::TextEvulator@ te = TextEngine::Text::TextEvulator(config_path + loc, true);
 	dictionary@ globals = dictionary();
 	InitFunctionsAndVars(@globals);
-	te.TrimStartEnd = true;
+	te.TrimStartEnd = false;
 	@te.GlobalParameters = @globals;
 	te.Parse();
 	auto@ result = te.Elements.EvulateValue(0, 0);
