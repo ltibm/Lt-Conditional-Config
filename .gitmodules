@@ -2,3 +2,6 @@
 	path = scripts/TextEngine
 	url = https://github.com/ltibm/TextEngine
 	branch = 0.8
+[submodule "scripts/TextEngine"]
+	path = scripts/TextEngine
+	url = https://github.com/ltibm/TextEngine
