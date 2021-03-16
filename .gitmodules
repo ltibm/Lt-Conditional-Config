@@ -1,3 +1,3 @@
-[submodule "sciptsTextEngine"]
-	path = scipts/TextEngine
+[submodule "scripts/TextEngine"]
+	path = scripts/TextEngine
 	url = https://github.com/ltibm/TextEngine
