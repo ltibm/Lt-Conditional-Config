@@ -6,11 +6,11 @@ CCVar@ cvar_Status;
 CCVar@ cvar_LoadTime;
 const string config_path = "scripts/plugins/LtCndConfig/configs/";
 string tempcfgfileLocation = "";
+AutoTrimEvulateResultHandler@ trimHandler = @AutoTrimEvulateResultHandler();
 void PluginInit()
 {
 	g_Module.ScriptInfo.SetAuthor( "Lt." );
 	g_Module.ScriptInfo.SetContactInfo( "https://steamcommunity.com/id/ibmlt/" );
-	//@cvar_Lazy = CCVar("lazy_cfg", "server_lazy", "Set cfg name", ConCommandFlag::AdminOnly);
 	@cvar_Status = CCVar("cconfig_status", 3, "Enable or disable this addon(1 to 3)", ConCommandFlag::AdminOnly);
 	@cvar_LoadTime = CCVar("cconfig_loadtime", 0.25, "Set conditional config  loading time", ConCommandFlag::AdminOnly);
 	ConfigStart();
@@ -54,6 +54,10 @@ void DeleteTempFile()
 {
 	FILEUTIL::Delete(tempcfgfileLocation);
 }
+void PrintLine(string str)
+{
+	g_EngineFuncs.ServerPrint("\r\n" + str + "\r\n");
+}
 string GetDynamicConfigFile()
 {
 	string loc = "_config_start.cfg";
@@ -61,7 +65,7 @@ string GetDynamicConfigFile()
 	TextEngine::Text::TextEvulator@ te = TextEngine::Text::TextEvulator(config_path + loc, true);
 	dictionary@ globals = dictionary();
 	InitFunctionsAndVars(@globals);
-	te.TrimStartEnd = false;
+	@te.EvulatorHandler = function() { return @trimHandler;};
 	@te.GlobalParameters = @globals;
 	te.Parse();
 	auto@ result = te.Elements.EvulateValue(0, 0);
@@ -91,4 +95,16 @@ int GenerateNumber(int minlen = 4, int maxlen = 4)
 		}
 	}
 	return atoi(generated);
+}
+class AutoTrimEvulateResultHandler : TextEngine::Evulator::EvulatorHandler
+{
+	void OnRenderFinishPost(TextEngine::Text::TextElement@ tag, dictionary@ vars, TextEngine::Text::TextEvulateResult@ result) { 
+		
+		if(@result !is null && tag.ElementType == TextEngine::Text::ElementNode && !result.TextContent.IsEmpty())
+		{
+			result.TextContent += "\n";
+		}
+		if(@result is null || tag.ElementType != TextEngine::Text::TextNode) return;
+		result.TextContent = STRINGUTIL::Trim(result.TextContent);
+	}
 }

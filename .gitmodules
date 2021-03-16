@@ -1,0 +1,4 @@
+[submodule "TextEngine"]
+	path = scripts/TextEngine
+	url = https://github.com/ltibm/TextEngine
+	branch = 0.8
